@@ -1,4 +1,4 @@
-package src.Ships
+﻿package src.Ships
 {
 	import flash.display.Sprite;
 	import flash.events.Event;
@@ -9,7 +9,7 @@ package src.Ships
 	{
 		private var weapon:AlienWeapon;
 		
-		private const aProjectiles:Array = [AlienWeapon.CANNON, AlienWeapon.MINE]
+		private const aProjectiles:Array = [AlienWeapon.MINE, AlienWeapon.CANNON]
 		
 		override internal function drawShip():void
 		{
@@ -40,7 +40,7 @@ package src.Ships
 			{
 				var cProjectile:uint = aProjectiles[Math.floor(Math.random() * aProjectiles.length)];
 				
-				weapon.fire(cProjectile, this.parent, this.x, this.y+15);
+				weapon.fire(cProjectile, stage, this.x, this.y+15);
 			}
 		}
 	}
