@@ -1,4 +1,4 @@
-package src.Ships
+﻿package src.Ships
 {
 	import flash.display.Sprite;
 	import src.Ships.ShipCreator;
@@ -10,6 +10,7 @@ package src.Ships
 
 	public class BlockAliensShips extends Sprite
 	{
+		public static const KILLED_ALL_ALIENS = "killed_all_aliens";
 		public var shipFactory:ShipCreator;
 		
 		private var target:DisplayObjectContainer;
@@ -17,29 +18,36 @@ package src.Ships
 		private var timer:Timer;
 		private var direction:int = -1;
 		
-		public function BlockAliensShips(target:DisplayObjectContainer)
+		public function BlockAliensShips()
 		{
-			this.target = target;
+			this.target = parent;
 			shipFactory = new ShipCreator();
 			
 			createAlienShips();
 			
+			startAttack();
+			
+		}
+		public function startAttack():void {
+			for (var ship:String in ShipCreator.alienShips) {
+				ShipCreator.alienShips[ship].attack = true;
+			}
 			timer = new Timer(2000, 0);
 			timer.addEventListener(TimerEvent.TIMER, timerHandler);
 			timer.start();
-			
 		}
 		protected function timerHandler(event:TimerEvent):void {
 			if(ShipCreator.alienShips.length < 1) {
 				timer.removeEventListener(TimerEvent.TIMER, timerHandler);
 				timer.stop();
+				dispatchEvent(new Event(KILLED_ALL_ALIENS));
 			}
-			if(this.width + this.x > stage.stageWidth - 20) {
+			if(this.width + this.x < stage.stageWidth - 100) {
 				direction = -1;
 				this.y += 20;
 			}
 			
-			if(this.x < 40) {
+			if(this.x < 20) {
 				direction = 1;
 			} 
 			this.x += 20 * direction;
@@ -48,15 +56,13 @@ package src.Ships
 		private function createAlienShips():void {
 			for (var i:int = 1; i < 9; i++)
 			{
-				shipFactory.addShip(ShipCreator.ALIEN, this,
-								80 * i, 100);
+				shipFactory.addShip(ShipCreator.ALIEN, this, 80 * i, 100);
 			
 			}
 			
 			for (i = 1; i < 9; i++)
 			{
-				shipFactory.addShip(ShipCreator.ALIEN, this,
-								80 * i, 140);
+				shipFactory.addShip(ShipCreator.ALIEN, this, 80 * i, 140);
 			
 			}
 			

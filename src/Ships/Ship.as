@@ -1,4 +1,4 @@
-package src.Ships
+﻿package src.Ships
 {
 	import flash.display.Sprite;
 	import flash.events.Event;
@@ -7,6 +7,10 @@ package src.Ships
 	
 	internal class Ship extends Sprite
 	{
+		
+		public function Ship() {
+			super();
+		}
 		internal function setLoc(xLoc:int, yLoc:int):void
 		{
 			this.x = xLoc;

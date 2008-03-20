@@ -1,4 +1,4 @@
-package src.Weapons
+﻿package src.Weapons
 {
 	internal class HeroCannonBall extends Projectile
 	{

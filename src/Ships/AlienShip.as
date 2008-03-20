@@ -7,10 +7,15 @@
 	
 	public class AlienShip extends Ship
 	{
-		private var weapon:AlienWeapon;
+		private var _weapon:AlienWeapon;
+		private var _isAttacking:Boolean;
 		
 		private const aProjectiles:Array = [AlienWeapon.MINE, AlienWeapon.CANNON]
 		
+		public function AlienShip() {
+			super();
+			
+		}
 		override internal function drawShip():void
 		{
 			graphics.beginFill(0xFFFFFF);
@@ -23,24 +28,32 @@
 		
 		override internal function initShip():void
 		{
-			weapon = new AlienWeapon();
+			_isAttacking = false;
+			_weapon = new AlienWeapon();
+			attack = false;
 			
-			this.addEventListener(Event.ENTER_FRAME, this.doFire);
+		}
+		public function set attack(value:Boolean):void {
+			if(!_isAttacking && value) 
+				this.addEventListener(Event.ENTER_FRAME, this.doFire);
+			if(_isAttacking && !value)
+				this.removeEventListener(Event.ENTER_FRAME, this.doFire);
+		}
+		public function get isAttacking():Boolean {
+			return _isAttacking;
 		}
 		override public function destroyShip():void {
+			this.removeEventListener(Event.ENTER_FRAME, this.doFire);
+			this.parent.removeChild(this);
 			
-			if(this.stage) {
-				this.removeEventListener(Event.ENTER_FRAME, this.doFire);
-				this.parent.removeChild(this);
-			}
 		}
 		protected function doFire(event:Event):void
 		{
-			if (Math.ceil(Math.random() * 150) == 1)
+			if (Math.ceil(Math.random() * 300) == 1)
 			{
-				var cProjectile:uint = aProjectiles[Math.floor(Math.random() * aProjectiles.length)];
+				var cProjectile:uint = aProjectiles[((Math.random() * 6) < 5) ? 1 : 0];
 				
-				weapon.fire(cProjectile, stage, this.x, this.y+15);
+				_weapon.fire(cProjectile, stage, this.x + parent.x, this.y + parent.y + 15);
 			}
 		}
 	}
