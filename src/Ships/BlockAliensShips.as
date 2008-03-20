@@ -46,14 +46,14 @@ package src.Ships
 		}
 		
 		private function createAlienShips():void {
-			for (var i:int = 0; i < 8; i++)
+			for (var i:int = 1; i < 9; i++)
 			{
 				shipFactory.addShip(ShipCreator.ALIEN, this,
 								80 * i, 100);
 			
 			}
 			
-			for (i = 0; i < 8; i++)
+			for (i = 1; i < 9; i++)
 			{
 				shipFactory.addShip(ShipCreator.ALIEN, this,
 								80 * i, 140);

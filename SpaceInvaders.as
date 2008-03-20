@@ -24,7 +24,6 @@
 			var aliensBlock:BlockAliensShips = new BlockAliensShips(stage);
 			addChild(aliensBlock);
 			
-			
 		}
 	}
 }
