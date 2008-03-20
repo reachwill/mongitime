@@ -21,9 +21,9 @@
 			
 			
 			
-			var aliensBlock:BlockAliensShips = new BlockAliensShips(this.parent);
+			var aliensBlock:BlockAliensShips = new BlockAliensShips(stage);
 			addChild(aliensBlock);
-			aliensBlock.x = 120;
+			
 			
 		}
 	}
