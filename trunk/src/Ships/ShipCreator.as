@@ -1,6 +1,6 @@
-package src.Ships
+﻿package src.Ships
 {
-	import flash.display.Sprite;
+	import flash.display.DisplayObjectContainer;
 	import flash.display.Stage;
 	
 	public class ShipCreator
@@ -13,7 +13,7 @@ package src.Ships
 		public static var alienShips:Array = new Array();
 		public static var heroShips:Array = new Array();
 		
-		public function addShip(cShipType:uint, target:Sprite, xLoc:int, yLoc:int):void
+		public function addShip(cShipType:uint, target:DisplayObjectContainer, xLoc:int, yLoc:int):Ship
 		{
 			var ship:Ship = this.createShip(cShipType);
 			
@@ -29,6 +29,7 @@ package src.Ships
 			ship.setLoc(xLoc,yLoc);
 			target.addChild(ship);
 			ship.initShip();
+			return ship;
 		}
 		public static function removeShip(shipReference:Object):void {
 			var ship:Object = shipReference;

@@ -2,10 +2,13 @@
 {
 	import flash.display.Sprite;
 	import src.Weapons.HeroWeapon;
+	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import src.Gamer.Player
 	
 	public class HeroShip extends Ship
 	{
+		public static const DIE:String = "die";
 		private var weapon:HeroWeapon;
 		
 		
@@ -32,6 +35,7 @@
 				this.stage.removeEventListener(MouseEvent.MOUSE_DOWN, this.doFire);
 				this.parent.removeChild(this);
 			}
+			dispatchEvent(new Event(DIE));
 		}
 		
 		protected function doMoveShip(event:MouseEvent):void
@@ -42,7 +46,7 @@
 		protected function doFire(event:MouseEvent):void
 		{
 			
-			weapon.fire(HeroWeapon.CANNON, this.parent, this.x, this.y - 25);
+			weapon.fire(HeroWeapon.CANNON, stage, this.x, this.y - 25, this.parent as Player);
 			event.updateAfterEvent();
 			
 		}

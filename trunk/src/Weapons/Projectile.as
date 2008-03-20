@@ -4,12 +4,14 @@
 	import flash.events.Event;
 	
 	import src.Ships.ShipCreator;
-
+	import src.Gamer.Player;
+	
 	internal class Projectile extends Sprite
 	{
 		public static const ALIEN:uint = 0;
 		public static const HERO:uint = 1;
 
+		private var playerOwner:Player;
 		
 		internal var nSpeed:Number;
 		internal var nType:int;
@@ -20,7 +22,24 @@
 		{
 			nSpeed = 5;
 		}
-
+		
+		public function set owner(owner:Player):void {
+			if (owner != null) {
+				playerOwner = owner;
+			}
+			else {
+				throw new Error("owner must be != null");
+			}
+		}
+		
+		public function get owner():Player {
+			if (playerOwner) {
+				return playerOwner;
+			}
+			else {
+				return null;
+			}
+		}
 		
 		internal function release():void
 		{
@@ -58,6 +77,9 @@
 						
 						if(this.parent.getChildIndex(this)) {
 							this.parent.removeChild(this);
+						}
+						if(owner) {
+							owner.addKill();
 						}
 						ShipCreator.alienShips[i].destroyShip();
 						ShipCreator.removeShip(ShipCreator.alienShips[i]);
