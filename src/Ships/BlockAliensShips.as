@@ -17,9 +17,11 @@
 		
 		private var timer:Timer;
 		private var direction:int = -1;
+		private var level:Number;
 		
-		public function BlockAliensShips()
+		public function BlockAliensShips(level:Number)
 		{
+			this.level = level;
 			this.target = parent;
 			shipFactory = new ShipCreator();
 			
@@ -32,7 +34,12 @@
 			for (var ship:String in ShipCreator.alienShips) {
 				ShipCreator.alienShips[ship].attack = true;
 			}
-			timer = new Timer(2000, 0);
+			var velocidad:Number = 2000 - this.level * 300;
+			if (velocidad < 100) { 
+				velocidad = 300;
+			}
+			
+			timer = new Timer(velocidad, 0);
 			timer.addEventListener(TimerEvent.TIMER, timerHandler);
 			timer.start();
 		}
