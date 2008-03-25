@@ -19,6 +19,8 @@
 		private var direction:int = -1;
 		private var level:Number;
 		
+		private var _isAttacking:Boolean;
+		
 		public function BlockAliensShips(level:Number)
 		{
 			this.level = level;
@@ -31,6 +33,8 @@
 			
 		}
 		public function startAttack():void {
+			_isAttacking = true;
+			
 			for (var ship:String in ShipCreator.alienShips) {
 				ShipCreator.alienShips[ship].attack = true;
 			}
@@ -40,24 +44,44 @@
 			}
 			
 			timer = new Timer(velocidad, 0);
-			timer.addEventListener(TimerEvent.TIMER, timerHandler);
+			timer.addEventListener(TimerEvent.TIMER, attackingHandler);
 			timer.start();
 		}
-		protected function timerHandler(event:TimerEvent):void {
-			if(ShipCreator.alienShips.length < 1) {
-				timer.removeEventListener(TimerEvent.TIMER, timerHandler);
-				timer.stop();
-				dispatchEvent(new Event(KILLED_ALL_ALIENS));
+		protected function attackingHandler(event:TimerEvent):void {
+			if(attackMode) {
+				for(var index:String in ShipCreator.alienShips) {
+					
+					var ship:AlienShip =  ShipCreator.alienShips[index];
+					ship.attack = true;
+				}
+				
+				if(ShipCreator.alienShips.length < 1) {
+					timer.removeEventListener(TimerEvent.TIMER, attackingHandler);
+					timer.stop();
+					dispatchEvent(new Event(KILLED_ALL_ALIENS));
+				}
+				if(this.width + this.x < stage.stageWidth - 100) {
+					direction = -1;
+					this.y += 20;
+				}
+				
+				if(this.x < 20) {
+					direction = 1;
+				} 
+				this.x += 20 * direction;
+			} else {
+				for(var index:String in ShipCreator.alienShips) {
+					
+					var ship:AlienShip =  ShipCreator.alienShips[index];
+					ship.attack = false;
+				}
 			}
-			if(this.width + this.x < stage.stageWidth - 100) {
-				direction = -1;
-				this.y += 20;
-			}
-			
-			if(this.x < 20) {
-				direction = 1;
-			} 
-			this.x += 20 * direction;
+		}
+		public function get attackMode():Boolean {
+			return _isAttacking;
+		}
+		public function set attackMode(value:Boolean):void {
+			_isAttacking = value;
 		}
 		
 		private function createAlienShips():void {

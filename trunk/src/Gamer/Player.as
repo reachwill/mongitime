@@ -3,18 +3,33 @@
 	import flash.display.Sprite;
 	import flash.display.DisplayObjectContainer;
 	import flash.events.Event;
+	import flash.events.TimerEvent;
 	import flash.text.TextField;
 	import flash.text.TextFormat;
-	
+	import flash.utils.Timer;
 	import src.Ships.HeroShip;
 	import src.Ships.ShipCreator;
 	
 	
 	public class Player extends Sprite {
 		
+		/**
+		 * Vidas restantes
+		 */
 		public var lifes:int = 5;
+		/**
+		 * Naves destruidas
+		 */
 		public var kills:int = 0;
+		/**
+		 * Puntaje
+		 */
 		public var score:Number = 0;
+		
+		protected var _attackMode:Boolean = false; 
+		
+		
+		
 		
 		private var shipFactory:ShipCreator;
 		private var shipReference:HeroShip;
@@ -61,8 +76,20 @@
 		private function newShip():void {
 			shipReference = shipFactory.addShip(ShipCreator.HERO, this, 390, 580) as HeroShip;
 			shipReference.addEventListener(HeroShip.DIE, playerDieHandler);
+			
+		}
+		public function set attackMode(value:Boolean):void {
+			if (value && shipReference != null) {
+				_attackMode = true;
+				shipReference.startAttack();
+			} else if (!value && shipReference != null) {
+				_attackMode = false;
+				shipReference.stopAttack();
+			}
+			
 		}
 		private function playerDieHandler(event:Event):void {
+			dispatchEvent(event);
 			lifes--;
 			if(lifes < 0) {
 				lifesField.text = "Game Over";

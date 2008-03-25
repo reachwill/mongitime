@@ -7,6 +7,7 @@
 	import flash.text.TextField;
 	import flash.utils.Timer;
 	import src.Ships.BlockAliensShips;
+	import src.Ships.HeroShip;
 	import src.Gamer.Player;
 
 	public class SpaceInvaders extends Sprite
@@ -15,6 +16,8 @@
 		
 		private var aliensBlock:BlockAliensShips;
 		
+		private var player:Player;
+		private var ready:Ready; 
 		private var msg:MovieClip;
 		
 		public function SpaceInvaders()
@@ -25,12 +28,31 @@
 			
 			iniciarNivel();
 			
-			var player:Player = new Player();
+			player = new Player();
+			player.addEventListener(HeroShip.DIE, playerDieHandler);
 			addChild(player);
 			player.initGame();
+			playerDieHandler();
+			
 			
 		}
-		
+		private function playerDieHandler(event:Event = null):void {
+			aliensBlock.attackMode = false;
+			
+			ready = new Ready();
+			ready.x = stage.stageWidth / 2;
+			ready.y = stage.stageHeight / 2;
+			addChild(ready);
+			
+			var tmr:Timer = new Timer(4000, 1);
+			tmr.addEventListener(TimerEvent.TIMER, delayAttackHero);
+			tmr.start();
+		}
+		private function delayAttackHero(event:TimerEvent):void {
+			removeChild(ready);
+			player.attackMode = true;
+			aliensBlock.attackMode = true;
+		}
 		private function iniciarNivel():void {
 			aliensBlock = new BlockAliensShips(this.level);
 			aliensBlock.addEventListener(BlockAliensShips.KILLED_ALL_ALIENS, levelCompleted);
