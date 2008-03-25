@@ -24,15 +24,22 @@
 		override internal function initShip():void
 		{
 			weapon = new HeroWeapon();
-			
 			this.stage.addEventListener(MouseEvent.MOUSE_MOVE, this.doMoveShip);
-			this.stage.addEventListener(MouseEvent.MOUSE_DOWN, this.doFire);
+			
+		}
+		public function startAttack():void {
+			if (this.stage)
+				this.stage.addEventListener(MouseEvent.MOUSE_DOWN, this.doFire);
+		}
+		public function stopAttack():void {
+			if (this.stage)
+				this.stage.removeEventListener(MouseEvent.MOUSE_DOWN, this.doFire);
 		}
 		override public function destroyShip():void {
 			
 			if(this.stage) {
+				stopAttack();
 				this.stage.removeEventListener(MouseEvent.MOUSE_MOVE, this.doMoveShip);
-				this.stage.removeEventListener(MouseEvent.MOUSE_DOWN, this.doFire);
 				this.parent.removeChild(this);
 			}
 			dispatchEvent(new Event(DIE));

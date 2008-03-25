@@ -34,9 +34,9 @@
 			
 		}
 		public function set attack(value:Boolean):void {
-			if(!_isAttacking && value) 
+			if(value) 
 				this.addEventListener(Event.ENTER_FRAME, this.doFire);
-			if(_isAttacking && !value)
+			if(!value)
 				this.removeEventListener(Event.ENTER_FRAME, this.doFire);
 		}
 		public function get isAttacking():Boolean {
