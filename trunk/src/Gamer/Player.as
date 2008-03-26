@@ -89,7 +89,7 @@
 			
 		}
 		private function playerDieHandler(event:Event):void {
-			dispatchEvent(event);
+			
 			lifes--;
 			if(lifes < 0) {
 				lifesField.text = "Game Over";
@@ -99,11 +99,12 @@
 			shipReference.removeEventListener(HeroShip.DIE, playerDieHandler);
 			shipReference = null;
 			newShip();
+			dispatchEvent(event);
 		}
 		public function addKill():void {
 			kills++;
 			scoreField.text = new String(kills * 100);
-			trace(kills);
+			//trace(kills);
 		}
 	}
 }
