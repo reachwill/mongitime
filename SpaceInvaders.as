@@ -9,6 +9,7 @@
 	import src.Ships.BlockAliensShips;
 	import src.Ships.HeroShip;
 	import src.Gamer.Player;
+	import src.Weapons.Weapon;
 
 	public class SpaceInvaders extends Sprite
 	{
@@ -39,17 +40,25 @@
 		private function playerDieHandler(event:Event = null):void {
 			aliensBlock.attackMode = false;
 			
-			ready = new Ready();
-			ready.x = stage.stageWidth / 2;
-			ready.y = stage.stageHeight / 2;
-			addChild(ready);
+			Weapon.removeAllProjectiles();
+			
+			if(player.lifes > 0) {
+				ready = new Ready();
+				ready.name = "ready";
+				ready.x = stage.stageWidth / 2;
+				ready.y = stage.stageHeight / 2;
+				addChild(ready);
+			}
 			
 			var tmr:Timer = new Timer(4000, 1);
 			tmr.addEventListener(TimerEvent.TIMER, delayAttackHero);
 			tmr.start();
 		}
 		private function delayAttackHero(event:TimerEvent):void {
-			removeChild(ready);
+			
+			if(getChildByName("ready") != null) {
+				removeChild(getChildByName("ready"));
+			}
 			player.attackMode = true;
 			aliensBlock.attackMode = true;
 		}
