@@ -42,7 +42,7 @@
 			
 			Weapon.removeAllProjectiles();
 			
-			if(player.lifes > 0) {
+			if(player.lifes > 0 && player.lifes < 5) {
 				ready = new Ready();
 				ready.name = "ready";
 				ready.x = stage.stageWidth / 2;
