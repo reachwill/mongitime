@@ -75,7 +75,7 @@
 						
 						this.removeEventListener(Event.ENTER_FRAME, this.doMoveProjectile);
 						
-						if(this.parent.getChildIndex(this)) {
+						if(this.parent && this.parent.getChildIndex(this)) {
 							this.parent.removeChild(this);
 						}
 						if(owner) {
@@ -95,7 +95,7 @@
 						
 						this.removeEventListener(Event.ENTER_FRAME, this.doMoveProjectile);
 						
-						if(this.parent.getChildIndex(this)) {
+						if(this.parent && this.parent.getChildIndex(this)) {
 							this.parent.removeChild(this);
 						}
 						ShipCreator.heroShips[i].destroyShip();

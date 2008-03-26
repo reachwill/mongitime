@@ -49,9 +49,9 @@
 		}
 		protected function attackingHandler(event:TimerEvent):void {
 			if(attackMode) {
-				for(var index:String in ShipCreator.alienShips) {
+				for(var k:String in ShipCreator.alienShips) {
 					
-					var ship:AlienShip =  ShipCreator.alienShips[index];
+					var ship:AlienShip =  ShipCreator.alienShips[k];
 					ship.attack = true;
 				}
 				
@@ -70,10 +70,10 @@
 				} 
 				this.x += 20 * direction;
 			} else {
-				for(var index:String in ShipCreator.alienShips) {
+				for(var i:String in ShipCreator.alienShips) {
 					
-					var ship:AlienShip =  ShipCreator.alienShips[index];
-					ship.attack = false;
+					var s:AlienShip =  ShipCreator.alienShips[i];
+					s.attack = false;
 				}
 			}
 		}
