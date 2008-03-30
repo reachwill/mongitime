@@ -1,5 +1,6 @@
 ﻿package src.Weapons
 {
+	import flash.events.Event;
 	internal class HeroCannonBall extends Projectile
 	{
 		
@@ -15,6 +16,5 @@
 			nSpeed = -10;
 			nType = Projectile.HERO;
 		}
-		
 	}
 }
