@@ -10,7 +10,7 @@
 
 	public class BlockAliensShips extends Sprite
 	{
-		public static const KILLED_ALL_ALIENS = "killed_all_aliens";
+		public static const KILLED_ALL_ALIENS:String = "killed_all_aliens";
 		public var shipFactory:ShipCreator;
 		
 		private var target:DisplayObjectContainer;
@@ -49,23 +49,21 @@
 		}
 		protected function attackingHandler(event:TimerEvent):void {
 			if(attackMode) {
-				for(var k:String in ShipCreator.alienShips) {
+				/*for(var k:String in ShipCreator.alienShips) {
 					
 					var ship:AlienShip =  ShipCreator.alienShips[k];
 					ship.attack = true;
-				}
+				}*/
 				
 				if(ShipCreator.alienShips.length < 1) {
 					timer.removeEventListener(TimerEvent.TIMER, attackingHandler);
 					timer.stop();
 					dispatchEvent(new Event(KILLED_ALL_ALIENS));
 				}
-				if(this.width + this.x < stage.stageWidth - 100) {
+				if(this.width + this.x > stage.stageWidth - 20) {
 					direction = -1;
-					this.y += 20;
-				}
-				
-				if(this.x < 20) {
+					this.y += 10;
+				} else if(this.x < 10) {
 					direction = 1;
 				} 
 				this.x += 20 * direction;
@@ -87,13 +85,13 @@
 		private function createAlienShips():void {
 			for (var i:int = 1; i < 9; i++)
 			{
-				shipFactory.addShip(ShipCreator.ALIEN, this, 80 * i, 100);
+				shipFactory.addShip(ShipCreator.ALIEN, this, 70 * i, 100);
 			
 			}
 			
 			for (i = 1; i < 9; i++)
 			{
-				shipFactory.addShip(ShipCreator.ALIEN, this, 80 * i, 140);
+				shipFactory.addShip(ShipCreator.ALIEN, this, 70 * i, 140);
 			
 			}
 			

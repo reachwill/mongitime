@@ -92,6 +92,7 @@
 		private function ocultarMensajeNivel(e:TimerEvent):void
 		{
 			removeChild(msg);
+			aliensBlock.attackMode = true;
 		}
 		
 		private function levelCompleted(event:Event):void {

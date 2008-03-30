@@ -49,7 +49,7 @@
 		}
 		protected function doFire(event:Event):void
 		{
-			if (Math.ceil(Math.random() * 300) == 1)
+			if ((Math.random() * 1000) < 1)
 			{
 				var cProjectile:uint = aProjectiles[((Math.random() * 6) < 5) ? 1 : 0];
 				

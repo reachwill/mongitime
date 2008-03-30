@@ -1,15 +1,19 @@
 ﻿package src.Ships
 {
-	import flash.display.Sprite;
-	import src.Weapons.HeroWeapon;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
-	import src.Gamer.Player
+	
+	import src.Gamer.Player;
+	import src.Weapons.HeroWeapon;
 	
 	public class HeroShip extends Ship
 	{
 		public static const DIE:String = "die";
 		private var weapon:HeroWeapon;
+		
+		
+		
+		public var maxProjectiles:int = 1;
 		
 		
 		override internal function drawShip():void
@@ -52,10 +56,10 @@
 		}
 		protected function doFire(event:MouseEvent):void
 		{
-			
-			weapon.fire(HeroWeapon.CANNON, stage, this.x, this.y - 25, this.parent as Player);
-			event.updateAfterEvent();
-			
+			if(!weapon.heroShootInAir) {
+				weapon.fire(HeroWeapon.CANNON, stage, this.x, this.y - 25, this.parent as Player);
+				event.updateAfterEvent();
+			}
 		}
 	}
 }

@@ -3,11 +3,13 @@
 	import flash.display.Sprite;
 	import flash.events.Event;
 	
-	import src.Ships.ShipCreator;
 	import src.Gamer.Player;
+	import src.Ships.ShipCreator;
 	
 	internal class Projectile extends Sprite
 	{
+		public static const BALA_DESTRUIDA:String = "BALA_IDA";
+		
 		public static const ALIEN:uint = 0;
 		public static const HERO:uint = 1;
 
@@ -63,6 +65,9 @@
 					this.removeEventListener(Event.ENTER_FRAME, this.doMoveProjectile);
 					//if(this.parent.getChildIndex(this)) {
 						this.parent.removeChild(this);
+						if(this.nType == HERO) {
+							dispatchEvent(new Event(BALA_DESTRUIDA));
+						}
 					//}
 				}
 			}
@@ -77,12 +82,14 @@
 						
 						if(this.parent && this.parent.getChildIndex(this)) {
 							this.parent.removeChild(this);
+							
 						}
 						if(owner) {
 							owner.addKill();
 						}
 						ShipCreator.alienShips[i].destroyShip();
 						ShipCreator.removeShip(ShipCreator.alienShips[i]);
+						dispatchEvent(new Event(BALA_DESTRUIDA));
 						break;
 						
 					}
