@@ -20,15 +20,22 @@
 		private var level:Number;
 		
 		private var _isAttacking:Boolean;
-		
+		var espacioMovimiento:Number;
 		public function BlockAliensShips(level:Number)
 		{
 			this.level = level;
 			this.target = parent;
+			
+			addEventListener(Event.ADDED_TO_STAGE, init);
+			
+		}
+		protected function init(event:Event):void {
+			removeEventListener(Event.ADDED_TO_STAGE, init);
+			
 			shipFactory = new ShipCreator();
 			
 			createAlienShips();
-			
+			espacioMovimiento = stage.stageWidth - width;
 			startAttack();
 			
 		}
@@ -60,10 +67,13 @@
 					timer.stop();
 					dispatchEvent(new Event(KILLED_ALL_ALIENS));
 				}
-				if(this.width + this.x > stage.stageWidth - 20) {
+				
+				
+				
+				if(this.x > espacioMovimiento) {
 					direction = -1;
 					this.y += 10;
-				} else if(this.x < 10) {
+				} if (this.x < 10) {
 					direction = 1;
 				} 
 				this.x += 20 * direction;
